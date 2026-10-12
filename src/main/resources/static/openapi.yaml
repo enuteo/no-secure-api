@@ -1,0 +1,53 @@
+openapi: 3.0.3
+info:
+  title: No Secure API
+  version: 1.0.0
+  description: |
+    Documentation for the unauthenticated no-secure-api.
+servers:
+  - url: /
+paths:
+  /api/object/{id}:
+    get:
+      summary: Get an object by ID
+      description: |
+        Retrieves an object using its numeric ID. The current implementation
+        does not look up the requested ID and always returns the placeholder
+        object shown in the response example.
+      operationId: getObjectById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Numeric ID supplied to the endpoint.
+          schema:
+            type: integer
+            format: int64
+          example: 42
+      responses:
+        '200':
+          description: Object returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MyObject'
+              example:
+                id: 1
+                name: null
+        '400':
+          description: The path ID is not a valid 64-bit integer.
+components:
+  schemas:
+    MyObject:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Object identifier.
+          example: 1
+        name:
+          type: string
+          nullable: true
+          description: Object name; currently null in the placeholder response.
+          example: null
