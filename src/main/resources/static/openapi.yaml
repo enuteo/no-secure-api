@@ -11,9 +11,7 @@ paths:
     get:
       summary: Get an object by ID
       description: |
-        Retrieves an object using its numeric ID. The current implementation
-        does not look up the requested ID and always returns the placeholder
-        object shown in the response example.
+        Retrieves an object by its numeric ID from the base_objects table.
       operationId: getObjectById
       parameters:
         - name: id
@@ -23,7 +21,7 @@ paths:
           schema:
             type: integer
             format: int64
-          example: 42
+          example: 1
       responses:
         '200':
           description: Object returned successfully.
@@ -33,9 +31,11 @@ paths:
                 $ref: '#/components/schemas/MyObject'
               example:
                 id: 1
-                name: null
+                name: First object
         '400':
           description: The path ID is not a valid 64-bit integer.
+        '404':
+          description: No object exists with the requested ID.
 components:
   schemas:
     MyObject:
@@ -48,6 +48,5 @@ components:
           example: 1
         name:
           type: string
-          nullable: true
-          description: Object name; currently null in the placeholder response.
-          example: null
+          description: Object name stored in base_objects.
+          example: First object

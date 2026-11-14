@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import bes.tcc.nosecureapi.dto.MyObject;
 import bes.tcc.nosecureapi.service.MyService;
 import lombok.AllArgsConstructor;
+import java.util.Optional;
 
 @RestController 
 @RequestMapping ("/api")
@@ -19,7 +20,7 @@ public class MyController {
     
     @GetMapping ("/object/{id}")
     public ResponseEntity<MyObject> getObjectById(@PathVariable Long id) {
-        MyObject myObject = myService.findOBjectById(id);
-        return ResponseEntity.ok(myObject);
+        Optional<MyObject> myObject = myService.findObjectById(id);
+        return ResponseEntity.of(myObject);
     }
 }
