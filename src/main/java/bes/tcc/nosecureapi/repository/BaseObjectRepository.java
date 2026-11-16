@@ -24,10 +24,7 @@ public class BaseObjectRepository {
 					statement.setLong(1, id);
 					return statement;
 				},
-				(resultSet, rowNumber) -> MyObject.builder()
-						.id(resultSet.getLong("id"))
-						.name(resultSet.getString("name"))
-						.build());
+				(resultSet, rowNumber) -> new MyObject(resultSet.getLong("id"), resultSet.getString("name")));
 		return objects.stream().findFirst();
 	}
 }

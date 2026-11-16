@@ -7,7 +7,7 @@ info:
 servers:
   - url: /
 paths:
-  /api/object/{id}:
+  /object/{id}:
     get:
       summary: Get an object by ID
       description: |
