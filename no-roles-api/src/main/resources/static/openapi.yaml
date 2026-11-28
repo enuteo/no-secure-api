@@ -1,0 +1,66 @@
+openapi: 3.0.3
+info:
+  title: No Roles API
+  version: 1.0.0
+  description: |
+    Requires a valid bearer token and access to the object. Roles are not checked.
+servers:
+  - url: /
+paths:
+  /object/{id}:
+    get:
+      summary: Get an object by ID
+      description: |
+        Retrieves an object by its numeric ID from the base_objects table.
+        Requires a valid bearer token and access to the object. Roles are not checked.
+      operationId: getObjectById
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Numeric ID supplied to the endpoint.
+          schema:
+            type: integer
+            format: int64
+          example: 1
+      responses:
+        '200':
+          description: Object returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MyObject'
+              example:
+                id: 1
+                name: First object
+        '400':
+          description: The path ID is not a valid 64-bit integer.
+        '404':
+          description: No object exists with the requested ID.
+        '403':
+          description: The caller cannot access the object.
+        '401':
+          description: The bearer token is invalid.
+        '407':
+          description: No bearer token was provided.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    MyObject:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Object identifier.
+          example: 1
+        name:
+          type: string
+          description: Object name stored in base_objects.
+          example: First object
